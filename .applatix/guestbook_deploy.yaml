@@ -56,12 +56,6 @@ deployment:
   name: "guestbook-deploy-slave"
 scale:
   min: 1
-internal_routes:
-  - name: redis-master
-    ports:
-      - name: tcp
-        port: 6379
-        target_port: 6379
 containers:
   - server:
       template: run-redis-slave
