@@ -57,7 +57,7 @@ deployment:
 scale:
   min: 1
 internal_routes:
-  - name: 
+  - name: redis-master
     ports:
       - name: tcp
         port: 6379
@@ -91,8 +91,8 @@ containers:
 
 ---
 type: workflow
-name: Deploy Employee App 
-description: This is the workflow to deploy 2 Node.js pods with a database and a web service.
+name: Deploy Guestbook App 
+description: This is the workflow to deploy redis master with a redis slave. Then we deploy a PHP frontent which uses the redis cluster.
 inputs:
   parameters:
     appname:
