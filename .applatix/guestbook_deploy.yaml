@@ -30,7 +30,7 @@ inputs:
 application:
   name: "%%appname%%"
 deployment:
-  name: "guestbook-deploy"
+  name: "guestbook-deploy-master"
 scale:
   min: 1
 internal_routes:
@@ -53,7 +53,7 @@ inputs:
 application:
   name: "%%appname%%"
 deployment:
-  name: "guestbook-deploy"
+  name: "guestbook-deploy-slave"
 scale:
   min: 1
 internal_routes:
@@ -76,7 +76,7 @@ inputs:
 application:
   name: "%%appname%%"
 deployment:
-  name: "guestbook-deploy"
+  name: "guestbook-deploy-php"
 scale:
   min: 1
 external_routes:
