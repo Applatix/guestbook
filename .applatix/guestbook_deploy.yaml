@@ -96,7 +96,7 @@ description: This is the workflow to deploy redis master with a redis slave. The
 inputs:
   parameters:
     appname:
-      default: "employee-app"
+      default: "guestbook-app"
 steps:
   - deploy-redis-master:
       template: deploy-redis-master
