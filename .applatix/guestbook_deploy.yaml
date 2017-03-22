@@ -3,7 +3,7 @@ type: container
 name: run-redis-master
 description: Redis Master container
 container:
-  image: "applatix/redis-master"
+  image: "redis"
   resources:
     mem_mib: 2048
     cpu_cores: 0.4
