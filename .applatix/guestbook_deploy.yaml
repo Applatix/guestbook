@@ -1,0 +1,106 @@
+---
+type: container
+name: run-redis-master
+description: Redis Master container
+container:
+  image: "applatix/redis-master"
+  resources:
+    mem_mib: 2048
+    cpu_cores: 0.4
+
+---
+type: container
+name: run-redis-slave
+container:
+  resources:
+    mem_mib: 2048
+    cpu_cores: 0.4
+    disk_gb: 2
+  image: applatix/redis-slave
+  docker_options: 
+  command: 
+
+---
+type: deployment
+name: deploy-redis-master
+inputs:
+  parameters:
+    appname:
+      default: "guestbook-app"
+application:
+  name: "%%appname%%"
+deployment:
+  name: "guestbook-deploy"
+scale:
+  min: 1
+internal_routes:
+  - name: redis-master
+    ports:
+      - name: tcp
+        port: 6379
+        target_port: 6379
+containers:
+  - server:
+      template: run-redis-master
+       
+---
+type: deployment
+name: deploy-redis-slave
+inputs:
+  parameters:
+    appname:
+      default: "guestbook-app"
+application:
+  name: "%%appname%%"
+deployment:
+  name: "guestbook-deploy"
+scale:
+  min: 1
+internal_routes:
+  - name: 
+    ports:
+      - name: tcp
+        port: 6379
+        target_port: 6379
+containers:
+  - server:
+      template: run-redis-slave
+
+---
+type: deployment
+name: deploy-guestbook
+inputs:
+  parameters:
+    appname:
+      default: "guestbook-app"
+application:
+  name: "%%appname%%"
+deployment:
+  name: "guestbook-deploy"
+scale:
+  min: 1
+external_routes:
+  - name: guestbook-app
+    target_port: 80
+    redirect_http_to_https: true
+    ip_white_list:
+      - 0.0.0.0/0
+containers:
+  - server:
+      template: run-redis-master
+
+---
+type: workflow
+name: Deploy Employee App 
+description: This is the workflow to deploy 2 Node.js pods with a database and a web service.
+inputs:
+  parameters:
+    appname:
+      default: "employee-app"
+steps:
+  - deploy-redis-master:
+      template: deploy-redis-master
+  - deploy-redis-slave:
+      template: deploy-redis-slave      
+  - deploy-guestbook:
+      template: deploy-guestbook
