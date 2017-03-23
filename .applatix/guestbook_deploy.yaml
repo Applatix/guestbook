@@ -10,6 +10,16 @@ container:
 
 ---
 type: container
+name: run-php-redis
+description: PHP Master container
+container:
+  image: "applatix/redis-master"
+  resources:
+    mem_mib: 2048
+    cpu_cores: 0.4
+
+---
+type: container
 name: run-redis-slave
 container:
   resources:
@@ -81,7 +91,7 @@ external_routes:
       - 0.0.0.0/0
 containers:
   - server:
-      template: run-redis-master
+      template: run-php-redis
 
 ---
 type: workflow
