@@ -17,7 +17,8 @@ container:
   resources:
     mem_mib: 2048
     cpu_cores: 0.4
-
+  docker_options: "-e GET_HOSTS_FROM=env -e REDIS_MASTER_SERVICE_HOST=redis-master"
+  
 ---
 type: container
 name: run-redis-slave
@@ -66,9 +67,17 @@ deployment:
   name: "guestbook-deploy-slave"
 scale:
   min: 1
+internal_routes:
+  - name: redis-slave
+    ports:
+      - name: tcp
+        port: 6379
+        target_port: 6379
 containers:
   - server:
       template: run-redis-slave
+
+
 
 ---
 type: deployment
