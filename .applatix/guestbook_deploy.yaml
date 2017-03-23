@@ -13,12 +13,12 @@ type: container
 name: run-php-redis
 description: PHP Master container
 container:
-  image: "applatix/php-redis"
+  image: "gcr.io/google-samples/gb-frontend:v4"
   resources:
     mem_mib: 2048
     cpu_cores: 0.4
   docker_options: "-e GET_HOSTS_FROM=env -e REDIS_MASTER_SERVICE_HOST=redis-master"
-  
+
 ---
 type: container
 name: run-redis-slave
