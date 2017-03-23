@@ -13,7 +13,7 @@ type: container
 name: run-php-redis
 description: PHP Master container
 container:
-  image: "applatix/redis-master"
+  image: "applatix/php-redis"
   resources:
     mem_mib: 2048
     cpu_cores: 0.4
